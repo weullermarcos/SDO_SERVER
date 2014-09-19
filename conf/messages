@@ -1,0 +1,8 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+
+# Layout messages
+# ~~~~~~
+system.title=SDO - Sistema Detector de Ônibus
+system.footer=Sistema Detector de Ônibus
