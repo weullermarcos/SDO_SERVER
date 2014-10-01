@@ -12,7 +12,7 @@ import play.data.validation.Required;
  */
 @Entity
 @Table(name = "TB_INTINERARIO")
-public class IntinerarioBO extends BaseModel {
+public class ItineraryBO extends BaseModel {
 
     private static final long serialVersionUID = -2167369076863305437L;
     @Id
@@ -27,10 +27,10 @@ public class IntinerarioBO extends BaseModel {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constructors.
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public IntinerarioBO() {
+    public ItineraryBO() {
         super();
     }
-    public IntinerarioBO(final String linha, final String origem, final String destino) {
+    public ItineraryBO(final String linha, final String origem, final String destino) {
         super();
         this.linha = linha;
         this.origem = origem;
@@ -62,6 +62,6 @@ public class IntinerarioBO extends BaseModel {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     @Override
     public int compareTo(final BaseModel o) {
-        return this.getLinha().compareToIgnoreCase(((IntinerarioBO) o).getLinha());
+        return this.getLinha().compareToIgnoreCase(((ItineraryBO) o).getLinha());
     }
 }

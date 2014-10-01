@@ -4,5 +4,6 @@
 
 # Layout messages
 # ~~~~~~
+system.name=SDO Server
 system.title=SDO - Sistema Detector de Ônibus
 system.footer=Sistema Detector de Ônibus

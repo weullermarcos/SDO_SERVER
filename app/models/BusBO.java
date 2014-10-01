@@ -19,7 +19,7 @@ import play.data.validation.Required;
  */
 @Entity
 @Table(name = "TB_ONIBUS")
-public class OnibusBO extends BaseModel {
+public class BusBO extends BaseModel {
 
     private static final long serialVersionUID = 3635118080598839742L;
     @Id
@@ -30,17 +30,17 @@ public class OnibusBO extends BaseModel {
     private Short capacidadePassageiros;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_INTINERARIO")
-    private IntinerarioBO intinerario;
+    private ItineraryBO intinerario;
     @OneToMany(mappedBy = "onibus", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<PosicaoBO> lstPosicoes;
+    private List<PositionBO> lstPosicoes;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constructors.
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public OnibusBO() {
+    public BusBO() {
         super();
     }
-    public OnibusBO(final String placa, final Long numero, final Short capacidadePassageiros, final IntinerarioBO intinerario) {
+    public BusBO(final String placa, final Long numero, final Short capacidadePassageiros, final ItineraryBO intinerario) {
         super();
         this.placa = placa;
         this.numero = numero;
@@ -50,11 +50,11 @@ public class OnibusBO extends BaseModel {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Data Access
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public static List<OnibusBO> findLastsPositionByLineItineraty(final String lineItineraty) {
+    public static List<BusBO> findLastsPositionByLineItineraty(final String lineItineraty) {
         return find("intinerario.linha = ?1", lineItineraty).fetch();
     }
     public static void deleteFirstPositioByBusId(final String busId) {
-        final PosicaoBO firstPosition = PosicaoBO.findFirtPositionByBusId(busId);
+        final PositionBO firstPosition = PositionBO.findFirtPositionByBusId(busId);
         firstPosition.delete();
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -78,16 +78,16 @@ public class OnibusBO extends BaseModel {
     public void setCapacidadePassageiros(final Short capacidadePassageiros) {
         this.capacidadePassageiros = capacidadePassageiros;
     }
-    public IntinerarioBO getIntinerario() {
+    public ItineraryBO getIntinerario() {
         return this.intinerario;
     }
-    public void setIntinerario(final IntinerarioBO intinerario) {
+    public void setIntinerario(final ItineraryBO intinerario) {
         this.intinerario = intinerario;
     }
-    public List<PosicaoBO> getLstPosicoes() {
+    public List<PositionBO> getLstPosicoes() {
         return this.lstPosicoes;
     }
-    public void setLstPosicoes(final List<PosicaoBO> lstPosicoes) {
+    public void setLstPosicoes(final List<PositionBO> lstPosicoes) {
         this.lstPosicoes = lstPosicoes;
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,6 +95,6 @@ public class OnibusBO extends BaseModel {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     @Override
     public int compareTo(final BaseModel o) {
-        return this.getPlaca().compareToIgnoreCase(((OnibusBO) o).getPlaca());
+        return this.getPlaca().compareToIgnoreCase(((BusBO) o).getPlaca());
     }
 }

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import models.PosicaoBO.JpaEventListener;
+import models.PositionBO.JpaEventListener;
 
 import common.annotations.JsonExclude;
 
@@ -26,7 +26,7 @@ import common.annotations.JsonExclude;
 @Entity
 @Table(name = "TB_POSICAO")
 @EntityListeners(JpaEventListener.class)
-public class PosicaoBO extends BaseModel {
+public class PositionBO extends BaseModel {
 
     private static final long serialVersionUID = -8441987108826483287L;
     @Id
@@ -42,7 +42,7 @@ public class PosicaoBO extends BaseModel {
     @JsonExclude
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "ONIBUS_ID")
-    private OnibusBO onibus;
+    private BusBO onibus;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Data Access
@@ -50,7 +50,7 @@ public class PosicaoBO extends BaseModel {
     public static long countByBusId(final String busId) {
         return count("onibus.placa = ?1", busId);
     }
-    public static PosicaoBO findFirtPositionByBusId(final String busId) {
+    public static PositionBO findFirtPositionByBusId(final String busId) {
         return find("onibus.placa = ?1 ORDER BY data ASC", busId).first();
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,10 +86,10 @@ public class PosicaoBO extends BaseModel {
     public void setData(final Date data) {
         this.data = data;
     }
-    public OnibusBO getOnibus() {
+    public BusBO getOnibus() {
         return this.onibus;
     }
-    public void setOnibus(final OnibusBO onibus) {
+    public void setOnibus(final BusBO onibus) {
         this.onibus = onibus;
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -97,7 +97,7 @@ public class PosicaoBO extends BaseModel {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     @Override
     public int compareTo(final BaseModel o) {
-        return this.getData().compareTo(((PosicaoBO) o).getData());
+        return this.getData().compareTo(((PositionBO) o).getData());
     }
 
     /**
@@ -108,10 +108,10 @@ public class PosicaoBO extends BaseModel {
         private static final int POSITION_LIMIT = 10;
 
         @PrePersist
-        public void limitPositions(final PosicaoBO object) {
-            final long count = PosicaoBO.countByBusId(object.getOnibus().getPlaca());
+        public void limitPositions(final PositionBO object) {
+            final long count = PositionBO.countByBusId(object.getOnibus().getPlaca());
             if (count > POSITION_LIMIT) {
-                OnibusBO.deleteFirstPositioByBusId(object.getOnibus().getPlaca());
+                BusBO.deleteFirstPositioByBusId(object.getOnibus().getPlaca());
             }
         }
     }

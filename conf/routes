@@ -4,7 +4,11 @@
 
 # Home page
 # ~~~~
-GET     /                                                              Secure.login
+GET     /                                                             Secure.login
+
+# Admin Home page
+# ~~~~
+GET     /home                                                         HomeController.index
 
 # Import Secure routes
 *       /                                                             module:secure
@@ -34,7 +38,7 @@ GET     /public/                                                      staticDir:
 
 # Import CRUD routes
 # ~~~~
-*       /admin                                                        module:crud
+#*       /admin                                                        module:crud
 
 # Catch all
 # ~~~~
