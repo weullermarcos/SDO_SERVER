@@ -17,7 +17,7 @@ public abstract class BaseModel extends GenericModel implements Comparable<BaseM
     private static final long serialVersionUID = -2925246703624591882L;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // JSON aux methods
+    // JSON parse methods
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public String toJson() {
         final GsonBuilder builder = buildJsonParser();

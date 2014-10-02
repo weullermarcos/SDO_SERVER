@@ -16,13 +16,13 @@ public class ItineraryBO extends BaseModel {
 
     private static final long serialVersionUID = -2167369076863305437L;
     @Id
-    private String linha;
+    private String routeNumber;
     @Required
     @MaxSize(150)
-    private String origem;
+    private String origin;
     @Required
     @MaxSize(150)
-    private String destino;
+    private String arrival;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constructors.
@@ -30,38 +30,38 @@ public class ItineraryBO extends BaseModel {
     public ItineraryBO() {
         super();
     }
-    public ItineraryBO(final String linha, final String origem, final String destino) {
+    public ItineraryBO(final String busNumber, final String origin, final String arrival) {
         super();
-        this.linha = linha;
-        this.origem = origem;
-        this.destino = destino;
+        this.routeNumber = busNumber;
+        this.origin = origin;
+        this.arrival = arrival;
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // get/set
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public String getLinha() {
-        return this.linha;
+    public String getRouteNumber() {
+        return this.routeNumber;
     }
-    public void setLinha(final String linha) {
-        this.linha = linha;
+    public void setRouteNumber(final String linha) {
+        this.routeNumber = linha;
     }
-    public String getOrigem() {
-        return this.origem;
+    public String getOrigin() {
+        return this.origin;
     }
-    public void setOrigem(final String origem) {
-        this.origem = origem;
+    public void setOrigin(final String origem) {
+        this.origin = origem;
     }
-    public String getDestino() {
-        return this.destino;
+    public String getArrival() {
+        return this.arrival;
     }
-    public void setDestino(final String destino) {
-        this.destino = destino;
+    public void setArrival(final String destino) {
+        this.arrival = destino;
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // * @see java.lang.Comparable#compareTo(java.lang.Object)
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     @Override
     public int compareTo(final BaseModel o) {
-        return this.getLinha().compareToIgnoreCase(((ItineraryBO) o).getLinha());
+        return this.getRouteNumber().compareToIgnoreCase(((ItineraryBO) o).getRouteNumber());
     }
 }

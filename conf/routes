@@ -8,7 +8,7 @@ GET     /                                                             Secure.log
 
 # Admin Home page
 # ~~~~
-GET     /home                                                         HomeController.index
+GET     /admin                                                        HomeController.index
 
 # Import Secure routes
 *       /                                                             module:secure

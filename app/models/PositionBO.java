@@ -37,67 +37,81 @@ public class PositionBO extends BaseModel {
     @Column(name = "longitude", precision = 9, scale = 6)
     private Double longitude;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
-    private Short velocidade;
+    private Date date;
+    private Short speed;
     @JsonExclude
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "ONIBUS_ID")
-    private BusBO onibus;
+    private BusBO bus;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Data Access
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public static long countByBusId(final String busId) {
-        return count("onibus.placa = ?1", busId);
+        return count("bus.licensePlate = ?1", busId);
     }
+
     public static PositionBO findFirtPositionByBusId(final String busId) {
-        return find("onibus.placa = ?1 ORDER BY data ASC", busId).first();
+        return find("bus.licensePlate = ?1 ORDER BY date ASC", busId).first();
     }
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // get/set
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public Long getId() {
         return this.id;
     }
+
     public void setId(final Long id) {
         this.id = id;
     }
+
     public Double getLatitude() {
         return this.latitude;
     }
+
     public void setLatitude(final Double latitude) {
         this.latitude = latitude;
     }
+
     public Double getLongitude() {
         return this.longitude;
     }
+
     public void setLongitude(final Double longitude) {
         this.longitude = longitude;
     }
-    public Short getVelocidade() {
-        return this.velocidade;
+
+    public Short getSpeed() {
+        return this.speed;
     }
-    public void setVelocidade(final Short velocidade) {
-        this.velocidade = velocidade;
+
+    public void setSpeed(final Short velocidade) {
+        this.speed = velocidade;
     }
-    public Date getData() {
-        return this.data;
+
+    public Date getDate() {
+        return this.date;
     }
-    public void setData(final Date data) {
-        this.data = data;
+
+    public void setDate(final Date data) {
+        this.date = data;
     }
-    public BusBO getOnibus() {
-        return this.onibus;
+
+    public BusBO getBus() {
+        return this.bus;
     }
-    public void setOnibus(final BusBO onibus) {
-        this.onibus = onibus;
+
+    public void setBus(final BusBO onibus) {
+        this.bus = onibus;
     }
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // * @see java.lang.Comparable#compareTo(java.lang.Object)
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     @Override
     public int compareTo(final BaseModel o) {
-        return this.getData().compareTo(((PositionBO) o).getData());
+        return this.getDate().compareTo(((PositionBO) o).getDate());
     }
 
     /**
@@ -109,9 +123,9 @@ public class PositionBO extends BaseModel {
 
         @PrePersist
         public void limitPositions(final PositionBO object) {
-            final long count = PositionBO.countByBusId(object.getOnibus().getPlaca());
+            final long count = PositionBO.countByBusId(object.getBus().getLicensePlate());
             if (count > POSITION_LIMIT) {
-                BusBO.deleteFirstPositioByBusId(object.getOnibus().getPlaca());
+                BusBO.deleteFirstPositioByBusId(object.getBus().getLicensePlate());
             }
         }
     }

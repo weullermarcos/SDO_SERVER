@@ -24,15 +24,15 @@ public class BusBO extends BaseModel {
     private static final long serialVersionUID = 3635118080598839742L;
     @Id
     @MaxSize(7)
-    private String placa;
+    private String licensePlate;
     @Required
-    private Long numero;
-    private Short capacidadePassageiros;
+    private Long busNumber;
+    private Short capacity;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_INTINERARIO")
-    private ItineraryBO intinerario;
-    @OneToMany(mappedBy = "onibus", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<PositionBO> lstPosicoes;
+    private ItineraryBO itinerary;
+    @OneToMany(mappedBy = "bus", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<PositionBO> lstPositions;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constructors.
@@ -40,18 +40,18 @@ public class BusBO extends BaseModel {
     public BusBO() {
         super();
     }
-    public BusBO(final String placa, final Long numero, final Short capacidadePassageiros, final ItineraryBO intinerario) {
+    public BusBO(final String licensePlate, final Long busNumber, final Short capacity, final ItineraryBO itinerary) {
         super();
-        this.placa = placa;
-        this.numero = numero;
-        this.capacidadePassageiros = capacidadePassageiros;
-        this.intinerario = intinerario;
+        this.licensePlate = licensePlate;
+        this.busNumber = busNumber;
+        this.capacity = capacity;
+        this.itinerary = itinerary;
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Data Access
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public static List<BusBO> findLastsPositionByLineItineraty(final String lineItineraty) {
-        return find("intinerario.linha = ?1", lineItineraty).fetch();
+        return find("itinerary.routeNumber = ?1", lineItineraty).fetch();
     }
     public static void deleteFirstPositioByBusId(final String busId) {
         final PositionBO firstPosition = PositionBO.findFirtPositionByBusId(busId);
@@ -60,41 +60,41 @@ public class BusBO extends BaseModel {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // get/set
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public String getPlaca() {
-        return this.placa;
+    public String getLicensePlate() {
+        return this.licensePlate;
     }
-    public void setPlaca(final String placa) {
-        this.placa = placa;
+    public void setLicensePlate(final String placa) {
+        this.licensePlate = placa;
     }
-    public Long getNumero() {
-        return this.numero;
+    public Long getBusNumber() {
+        return this.busNumber;
     }
-    public void setNumero(final Long numero) {
-        this.numero = numero;
+    public void setBusNumber(final Long numero) {
+        this.busNumber = numero;
     }
-    public Short getCapacidadePassageiros() {
-        return this.capacidadePassageiros;
+    public Short getCapacity() {
+        return this.capacity;
     }
-    public void setCapacidadePassageiros(final Short capacidadePassageiros) {
-        this.capacidadePassageiros = capacidadePassageiros;
+    public void setCapacity(final Short capacidadePassageiros) {
+        this.capacity = capacidadePassageiros;
     }
-    public ItineraryBO getIntinerario() {
-        return this.intinerario;
+    public ItineraryBO getItinerary() {
+        return this.itinerary;
     }
-    public void setIntinerario(final ItineraryBO intinerario) {
-        this.intinerario = intinerario;
+    public void setItinerary(final ItineraryBO intinerario) {
+        this.itinerary = intinerario;
     }
-    public List<PositionBO> getLstPosicoes() {
-        return this.lstPosicoes;
+    public List<PositionBO> getLstPositions() {
+        return this.lstPositions;
     }
-    public void setLstPosicoes(final List<PositionBO> lstPosicoes) {
-        this.lstPosicoes = lstPosicoes;
+    public void setLstPositions(final List<PositionBO> lstPosicoes) {
+        this.lstPositions = lstPosicoes;
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // * @see java.lang.Comparable#compareTo(java.lang.Object)
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     @Override
     public int compareTo(final BaseModel o) {
-        return this.getPlaca().compareToIgnoreCase(((BusBO) o).getPlaca());
+        return this.getLicensePlate().compareToIgnoreCase(((BusBO) o).getLicensePlate());
     }
 }

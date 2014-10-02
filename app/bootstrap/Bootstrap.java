@@ -72,9 +72,9 @@ public class Bootstrap extends Job {
             final PositionBO object = new PositionBO();
             object.setLatitude(new BigDecimal(latitude).setScale(6, BigDecimal.ROUND_CEILING).doubleValue());
             object.setLongitude(new BigDecimal(longitude).setScale(6, BigDecimal.ROUND_CEILING).doubleValue());
-            object.setData(new Date());
-            object.setVelocidade((short) new Random().nextInt(100));
-            object.setOnibus(bus);
+            object.setDate(new Date());
+            object.setSpeed((short) new Random().nextInt(100));
+            object.setBus(bus);
             object.save();
 //            Thread.sleep(1000);
         }
