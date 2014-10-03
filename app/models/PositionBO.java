@@ -3,6 +3,7 @@ package models;
 import static javax.persistence.FetchType.LAZY;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,8 +16,13 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import models.PositionBO.JpaEventListener;
+
+import org.apache.commons.lang.math.NumberUtils;
+
+import play.data.validation.Required;
 
 import common.annotations.JsonExclude;
 
@@ -32,17 +38,24 @@ public class PositionBO extends BaseModel {
     @Id
     @GeneratedValue
     private Long id;
+    @Required
     @Column(name = "latitude", precision = 9, scale = 6)
     private Double latitude;
+    @Required
     @Column(name = "longitude", precision = 9, scale = 6)
     private Double longitude;
+    @Required
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+    @Required
     private Short speed;
+    @Required
     @JsonExclude
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "ONIBUS_ID")
     private BusBO bus;
+    @Transient
+    private String busLicensePlate;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Data Access
@@ -53,6 +66,34 @@ public class PositionBO extends BaseModel {
 
     public static PositionBO findFirtPositionByBusId(final String busId) {
         return find("bus.licensePlate = ?1 ORDER BY date ASC", busId).first();
+    }
+
+    public static List<PositionBO> findByKeyword(final String keyword, final String orderBy, final String order, final Integer offset, final Integer pageSize) {
+        final StringBuilder builder = new StringBuilder();
+        if (NumberUtils.isNumber(keyword)) {
+            builder.append("latitude = ").append(keyword);
+            builder.append(" OR longitude = ").append(keyword);
+            builder.append(" OR speed = ").append(keyword);
+            builder.append(" OR bus.licensePlate LIKE ?1");
+        } else {
+            builder.append("bus.licensePlate LIKE ?1");
+        }
+        builder.append(" ORDER BY ").append(orderBy).append(" ").append(order);
+        if (offset == null && pageSize == null) {
+            return find(builder.toString(), "%" + keyword.toUpperCase() + "%").fetch();
+        }
+        return find(builder.toString(), "%" + keyword.toUpperCase() + "%").fetch(offset, pageSize);
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Transients
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    public String getBusLicensePlate() {
+        return this.busLicensePlate;
+    }
+
+    public void setBusLicensePlate(final String busLicensePlate) {
+        this.busLicensePlate = busLicensePlate;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -82,28 +123,28 @@ public class PositionBO extends BaseModel {
         this.longitude = longitude;
     }
 
-    public Short getSpeed() {
-        return this.speed;
-    }
-
-    public void setSpeed(final Short velocidade) {
-        this.speed = velocidade;
-    }
-
     public Date getDate() {
         return this.date;
     }
 
-    public void setDate(final Date data) {
-        this.date = data;
+    public void setDate(final Date date) {
+        this.date = date;
+    }
+
+    public Short getSpeed() {
+        return this.speed;
+    }
+
+    public void setSpeed(final Short speed) {
+        this.speed = speed;
     }
 
     public BusBO getBus() {
         return this.bus;
     }
 
-    public void setBus(final BusBO onibus) {
-        this.bus = onibus;
+    public void setBus(final BusBO bus) {
+        this.bus = bus;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

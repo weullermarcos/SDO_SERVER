@@ -16,6 +16,7 @@ public class ItineraryBO extends BaseModel {
 
     private static final long serialVersionUID = -2167369076863305437L;
     @Id
+    @Required
     private String routeNumber;
     @Required
     @MaxSize(150)
@@ -30,38 +31,51 @@ public class ItineraryBO extends BaseModel {
     public ItineraryBO() {
         super();
     }
+
     public ItineraryBO(final String busNumber, final String origin, final String arrival) {
         super();
         this.routeNumber = busNumber;
         this.origin = origin;
         this.arrival = arrival;
     }
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // get/set
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public String getRouteNumber() {
         return this.routeNumber;
     }
-    public void setRouteNumber(final String linha) {
-        this.routeNumber = linha;
+
+    public void setRouteNumber(final String routeNumber) {
+        this.routeNumber = routeNumber;
     }
+
     public String getOrigin() {
         return this.origin;
     }
-    public void setOrigin(final String origem) {
-        this.origin = origem;
+
+    public void setOrigin(final String origin) {
+        this.origin = origin;
     }
+
     public String getArrival() {
         return this.arrival;
     }
-    public void setArrival(final String destino) {
-        this.arrival = destino;
+
+    public void setArrival(final String arrival) {
+        this.arrival = arrival;
     }
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // * @see java.lang.Comparable#compareTo(java.lang.Object)
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     @Override
     public int compareTo(final BaseModel o) {
         return this.getRouteNumber().compareToIgnoreCase(((ItineraryBO) o).getRouteNumber());
+    }
+
+    @Override
+    public String toString() {
+        return this.getRouteNumber();
     }
 }

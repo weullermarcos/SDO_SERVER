@@ -8,7 +8,7 @@ import controllers.Secure.Security;
  */
 public class SecurityController extends Security {
 
-    static boolean authenticate(String username, String password) {
+    static boolean authenticate(final String username, final String password) {
         if (username.equals("master") && password.equals("sdoserver")) {
             return true;
         }

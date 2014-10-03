@@ -24,16 +24,19 @@ public abstract class BaseModel extends GenericModel implements Comparable<BaseM
         final Gson gson = builder.create();
         return gson.toJson(this);
     }
+
     public static String toJson(final List<?> list) {
         final GsonBuilder builder = buildJsonParser();
         final Gson gson = builder.create();
         return gson.toJson(list);
     }
+
     public static <T extends JPABase> T fromJson(final String jsonString, final Class<?> clazz) {
         final GsonBuilder builder = buildJsonParser();
         final Gson gson = builder.create();
         return (T) gson.fromJson(jsonString, clazz);
     }
+
     public static GsonBuilder buildJsonParser() {
         final GsonBuilder builder = new GsonBuilder();
         builder.setExclusionStrategies(new SkipStrategy());

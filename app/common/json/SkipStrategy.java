@@ -18,10 +18,12 @@ public class SkipStrategy implements ExclusionStrategy {
         super();
         this.clazz = null;
     }
+
     public SkipStrategy(final Class<?> clazz) {
         super();
         this.clazz = clazz;
     }
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // * @see com.google.gson.ExclusionStrategy#shouldSkipClass(java.lang.Class)
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -29,6 +31,7 @@ public class SkipStrategy implements ExclusionStrategy {
     public boolean shouldSkipClass(final Class<?> clazz) {
         return this.clazz == clazz || clazz.getAnnotation(JsonExclude.class) != null;
     }
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // * @see
     // com.google.gson.ExclusionStrategy#shouldSkipField(com.google.gson.FieldAttributes)

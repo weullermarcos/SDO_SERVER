@@ -8,3 +8,86 @@ system.name=SDO Server
 system.title=SDO - Sistema Detector de Ônibus
 system.footer=Sistema Detector de Ônibus
 system.home.description=Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat velit non ante commodo euismod. Curabitur facilisis commodo lectus, ut scelerisque sapien. In sed massa vitae mi suscipit rhoncus id non purus. Nunc malesuada nulla vel justo molestie viverra. Pellentesque molestie commodo facilisis. Pellentesque tempor accumsan leo sit amet egestas. Nam dui nunc, commodo ut bibendum id, faucibus nec orci. <br> <br> Curabitur sit amet luctus risus, non ornare libero. Integer faucibus lacus at dapibus mollis. Nam nisi ante, cursus at placerat a, hendrerit nec velit. Nullam in turpis in ante eleifend faucibus sed placerat lacus. Vestibulum massa leo, feugiat a est eu, interdum rhoncus sapien. Suspendisse hendrerit erat eget dignissim venenatis. Donec volutpat libero quis arcu pharetra luctus. Nulla sit amet egestas mi, id aliquet orci. Donec nibh leo, luctus in commodo ac, lacinia a odio. Sed faucibus tempor semper. Nullam commodo risus sit amet elit tincidunt, at elementum metus porttitor. Integer quis pretium mauris, nec elementum eros. Duis eu orci at nunc pretium porttitor. Proin cursus ipsum eget arcu cursus consequat.
+
+# Default SECURE messages
+# ~~~~~~
+secure.title=SDO Server
+secure.username=Login:
+secure.password=Senha:
+secure.remember=Lembrar-me
+secure.signin=Entrar
+secure.log.out=Sair
+secure.error=Dados inválidos.
+secure.logout=Você saiu com sucesso.
+
+# Default CRUD messages
+# ~~~~~~
+crud.add=Criar &{%s}
+crud.list.title=&{%s}
+crud.list.size=%d &{%s}
+crud.list.totalSize=%d total
+crud.pagination.previous=« Anterior
+crud.pagination.next=Próximo »
+crud.pagination.last=Último »»
+crud.pagination.first=«« Primeiro
+crud.show.title=Alterar &{%s}
+crud.save=Salvar
+crud.saveAndContinue=Salvar e continuar editando
+crud.cancel=Cancelar
+crud.hasErrors=Por favor corrija os erros
+crud.blank.title=Criar &{%s}
+crud.saveAndAddAnother=Salvar e criar outro
+crud.delete=Excluir &{%s}
+crud.created=O(a) &{%s} foi criado(a)
+crud.saved=O(a) &{%s} foi atualizado(a)
+crud.deleted=O(a) &{%s} foi excluído(a)
+crud.delete.error=Não é possível excluir este objeto
+crud.search=Pesquisar
+crud.none=(vazio)
+crud.selectValue=(Selecione um valor)
+crud.help.required=Obrigatório.
+crud.help.minlength=Mínimo de %d caracteres.
+crud.help.maxlength=Máximo de %d caracteres.
+crud.help.email=Email válido.
+crud.help.dateformat=&{%s}.
+crud.help.numeric=Número.
+crud.help.min=Deve ser maior que %d.
+crud.help.future=Deve estar no futuro.
+crud.help.past=Deve estar no passado.
+crud.help.after=Depois %s.
+crud.help.before=Antes %s.
+crud.help.range=Entre %d e %d
+
+# Default Validation CRUD messages
+# ~~~~~~
+validation.required=Obrigatório
+validation.invalid=Valor inválido
+validation.maxSize=Quantidade inválida de caracteres.
+validation.minSize=Quantidade inválida de caracteres.
+
+# Controllers labels
+# ~~~~~~
+ItineraryController=Itinetários
+BusController=Ônibus
+PositionController=Posições
+
+# Models labels
+# ~~~~~~
+ItineraryBO=Itinerário
+BusBO=Ônibus
+PositionBO=Posição
+
+# System labels
+# ~~~~~~
+routeNumber=Linha
+origin=Origem
+arrival=Destino
+licensePlate=Placa
+busNumber=Número
+capacity=Capacidade
+itinerary=Itinerário
+date=Data
+latitude=Latitude
+longitude=Longitude
+speed=Velocidade
+bus=Ônibus

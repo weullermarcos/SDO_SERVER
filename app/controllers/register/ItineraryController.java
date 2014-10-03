@@ -1,10 +1,10 @@
 package controllers.register;
 
-import play.mvc.With;
 import models.ItineraryBO;
+import play.mvc.With;
 import controllers.CRUD;
-import controllers.Secure;
 import controllers.CRUD.For;
+import controllers.Secure;
 
 /**
  * @author jgomes - Jefferson Chaves Gomes | 11/09/2014 - 11:48:07

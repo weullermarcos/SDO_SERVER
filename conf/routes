@@ -8,25 +8,40 @@ GET     /                                                             Secure.log
 
 # Admin Home page
 # ~~~~
-GET     /admin                                                        HomeController.index
+GET     /admin/home                                                   HomeController.index
 
 # Import Secure routes
 *       /                                                             module:secure
 
 # CRUD URLs
 # ~~~~
-GET     /admin/itinerarios                                            register.IntinerarioController.list
-GET     /admin/itinerario                                             register.IntinerarioController.blank
-GET     /admin/itinerario/{id}                                        register.IntinerarioController.show
-POST    /admin/itinerario                                             register.IntinerarioController.create
-POST    /admin/itinerario/{id}                                        register.IntinerarioController.save
-DELETE  /admin/itinerario/{id}                                        register.IntinerarioController.delete
+GET     /admin/itinerarios                                            register.ItineraryController.list
+GET     /admin/itinerario                                             register.ItineraryController.blank
+GET     /admin/itinerario/{id}                                        register.ItineraryController.show
+POST    /admin/itinerario                                             register.ItineraryController.create
+POST    /admin/itinerario/{id}                                        register.ItineraryController.save
+DELETE  /admin/itinerario/{id}                                        register.ItineraryController.delete
+
+GET     /admin//lista/onibus                                          register.BusController.list
+GET     /admin/onibus                                                 register.BusController.blank
+GET     /admin/onibus/{id}                                            register.BusController.show
+POST    /admin/onibus                                                 register.BusController.create
+POST    /admin/onibus/{id}                                            register.BusController.save
+DELETE  /admin/onibus/{id}                                            register.BusController.delete
+
+GET     /admin/posioes                                                register.PositionController.list
+GET     /admin/posicao                                                register.PositionController.blank
+GET     /admin/posicao/{id}                                           register.PositionController.show
+POST    /admin/posicao                                                register.PositionController.create
+POST    /admin/posicao/{id}                                           register.PositionController.save
+DELETE  /admin/posicao/{id}                                           register.PositionController.delete
 
 
 # Service URLs
 # ~~~~
 POST    /save/bus/position                                            integration.IntegrationServiceController.savePosition
-GET     /find/bus/position                                            integration.IntegrationServiceController.findBusByItinerary
+GET     /find/bus/position/byLineItinerary/{lineItinerary}            integration.IntegrationServiceController.findPositionByItineraryId
+GET     /find/bus/position/byLicensePlate/{licensePlate}              integration.IntegrationServiceController.findPositionByBusId
 
 # Ignore favicon requests
 # ~~~~

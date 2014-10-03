@@ -1,18 +1,17 @@
 #{extends 'main.html' /}
 #{set title:"&{'system.title'}" /}
 
-#{if flash.success}
-	<div class="crudFlash flashSuccess">
-	    ${flash.success}
-	</div>
-#{/if}
-#{if flash.error || error}
-	<div class="crudFlash flashError">
-	    ${error ?: flash.error}
-	</div>
-#{/if}
-
 <div id="crudContent">
+	#{if flash.success}
+		<div class="crudFlash flashSuccess">
+		    ${flash.success}
+		</div>
+	#{/if}
+	#{if flash.error || error}
+		<div class="crudFlash flashError">
+		    ${error ?: flash.error}
+		</div>
+	#{/if}
     #{doLayout /}
 </div>
 

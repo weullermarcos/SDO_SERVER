@@ -17,20 +17,20 @@
 		    </div>
 		    <ul id="tools">
 		        <li>
-		            <a href="@{Secure.logout()}">Log out</a>
+		            <a href="@{Secure.logout()}">&{'secure.log.out'}</a>
 		        </li>
 		    </ul>
 		</div>
 		<div id="main">
 		    <ul id="adminMenu">
 		        <li class="${request.controller == 'register.ItineraryController' ? 'selected' : ''}">
-		            <a href="@{register.ItineraryController.list()}">&{'ItineraryController.title'}</a>
+		            <a href="@{register.ItineraryController.list}">&{'ItineraryController'}</a>
 		        </li>
 	            <li class="${request.controller == 'register.BusController' ? 'selected' : ''}">
-	                <a href="@{register.BusController.list()}">&{'BusController.title'}</a>
+	                <a href="@{register.BusController.list}">&{'BusController'}</a>
 	            </li>
 	            <li class="${request.controller == 'register.PositionController' ? 'selected' : ''}">
-	                <a href="@{register.PositionController.list()}">&{'PositionController.title'}</a>
+	                <a href="@{register.PositionController.list}">&{'PositionController'}</a>
 	            </li>
 		    </ul>
 		    #{doLayout /} 

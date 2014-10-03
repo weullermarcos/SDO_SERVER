@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Random;
 
-import models.ItineraryBO;
 import models.BusBO;
+import models.ItineraryBO;
 import models.PositionBO;
 import play.Logger;
 import play.jobs.Job;
@@ -37,18 +37,20 @@ public class Bootstrap extends Job {
         Logger.info("BOOTSTRAP FINISHED");
         Logger.info("======================================================");
     }
+
     private void createInitialData() throws InterruptedException {
         Logger.info("Creating initial data...");
         // Bus - 1
-        ItineraryBO itineraty = this.findItineraty("560", "Riacho", "W3 Sul");
-        BusBO bus = this.findBus("JFJ1593", 77775555L, itineraty);
+        ItineraryBO itineraty = this.findItineraty("560", "Riacho Fundo II", "W3 Sul");
+        BusBO bus = this.findBus("JFJ-1593", 77775555L, itineraty);
         this.saveRandonPositions(bus);
         // Bus - 2
         itineraty = this.findItineraty("813.1", "W3 Sul", "Pistão Sul");
-        bus = this.findBus("OVP5577", 75757575L, itineraty);
+        bus = this.findBus("OVP-5577", 75757575L, itineraty);
         this.saveRandonPositions(bus);
         Logger.info("Initial data was created...");
     }
+
     private ItineraryBO findItineraty(final String itineratyId, final String source, final String target) {
         ItineraryBO object = ItineraryBO.findById(itineratyId);
         if (object == null) {
@@ -57,6 +59,7 @@ public class Bootstrap extends Job {
         }
         return object;
     }
+
     private BusBO findBus(final String busId, final Long busNumber, final ItineraryBO itineraty) {
         BusBO object = BusBO.findById(busId);
         if (object == null) {
@@ -65,6 +68,7 @@ public class Bootstrap extends Job {
         }
         return object;
     }
+
     private void saveRandonPositions(final BusBO bus) throws InterruptedException {
         double latitude = -15.794133;
         double longitude = -47.890502;
@@ -76,7 +80,7 @@ public class Bootstrap extends Job {
             object.setSpeed((short) new Random().nextInt(100));
             object.setBus(bus);
             object.save();
-//            Thread.sleep(1000);
+            Thread.sleep(1000);
         }
     }
 }

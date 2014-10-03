@@ -15,12 +15,35 @@ public class IntegrationServiceController extends Controller {
     public static void savePosition() {
         final String jsonString = request.params.get("body", String.class);
         final PositionBO jsonObject = PositionBO.fromJson(jsonString, PositionBO.class);
-        jsonObject.delete();
-        System.out.println(jsonObject.toJson());
+        if (jsonObject.getLatitude() == null || jsonObject.getLongitude() == null || jsonObject.getDate() == null || jsonObject.getBusLicensePlate() == null
+                || jsonObject.getBusLicensePlate().length() != 8) {
+            badRequest();
+        }
+        BusBO bus = BusBO.findById(jsonObject.getBusLicensePlate());
+        if (bus == null) {
+            bus = new BusBO();
+            bus.setLicensePlate(jsonObject.getBusLicensePlate());
+            bus.save();
+        }
+        jsonObject.setBus(bus);
+        jsonObject.save();
         ok();
     }
-    public static void findBusByItinerary(final String lineItineraty) {
-        final List<BusBO> lstObjects = BusBO.findLastsPositionByLineItineraty(lineItineraty);
+
+    public static void findPositionByItineraryId(final String lineItinerary) {
+        if (lineItinerary == null || lineItinerary.trim().length() == 0) {
+            badRequest();
+        }
+        final List<BusBO> lstObjects = BusBO.findPositionByItineraryId(lineItinerary);
         renderJSON(BaseModel.toJson(lstObjects));
+    }
+
+    public static void findPositionByBusId(final String licensePlate) {
+        if (licensePlate == null || licensePlate.trim().length() == 0) {
+            badRequest();
+        }
+        final BusBO object = BusBO.findById(licensePlate);
+        final List<PositionBO> lstPositions = object.getLstPositions();
+        renderJSON(BaseModel.toJson(lstPositions));
     }
 }

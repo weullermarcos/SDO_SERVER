@@ -13,7 +13,7 @@ html, body {
 
 #login h1 {
     font-weight: bold;
-    color: #111;
+    color: #FFF;
 }
 
 #login form {
@@ -44,11 +44,13 @@ html, body {
 #username-field input {
     width: 200px;
     font-size: 13px;
+    height: 20px;
 }
 
 #password-field input {
-    width: 150px;
+    width: 200px;
     font-size: 13px;
+    height: 20px;
 }
 
 #remember-field input {
@@ -63,6 +65,8 @@ html, body {
 #signin-field input {
     margin-left: 155px;
     margin-top: 10px;
+    width: 100px;
+    background: #364B66;
 }
 
 #login .error, #login .success  {
