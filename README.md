@@ -1,6 +1,8 @@
 SDO_SERVER
 ==========
 
+Para melhor visualização deste arquivo: https://raw.githubusercontent.com/weullermarcos/SDO_SERVER/master/README.md
+
 -- Navegadores compatíveis:
 
 Chrome (recomendado)
