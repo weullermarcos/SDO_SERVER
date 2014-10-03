@@ -1,12 +1,18 @@
 SDO_SERVER
 ==========
 
-Dados de acesso:
+-- Navegadores compatíveis:
+
+Chrome (recomendado)
+Firefox
+
+
+-- Dados de acesso:
 
 user: master
 pass: sdoserver
 
-Regras de negócio:
+-- Regras de negócio:
 
 RNF-01: usaremos base de dados H2 que simplesmente grava os dados em um arquivo no diretório 
         DB da aplicação. Ref: http://www.h2database.com/html/features.html.
@@ -21,10 +27,15 @@ RN-02: apenas as últimas 10 posições de cada veículo serão armazenadas a fi
        recursos de disco. 
 
 
+-- Heroku Deploy REF.:
 
-// --------------------------------------------------------------------------------------------------
+https://devcenter.heroku.com/articles/getting-started-with-java#set-up
+https://www.playframework.com/documentation/1.2.7/deployment
+
+
+// ------------------------------------------------------------------------------------------------------------------
 1 - Para enviar posições de um determinado veículo ao servidor:
-// --------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------
 
 HTTP POST:  http://sdo-server.herokuapp.com/save/bus/position
 
@@ -40,9 +51,9 @@ JSON REQUEST BODY:
 HTTP RESPONSE: statusCode: 200
 
 
-// --------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------
 2 - Para recuperar posições a partir de uma placa:
-// --------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------
 
 HTTP GET:  http://sdo-server.herokuapp.com/find/bus/position/byLicensePlate/JFJ-1593
     
@@ -72,9 +83,9 @@ JSON RESPONSE:
 ]
 
 
-// --------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------
 3 - Para recuperar posições a partir de uma linha:
-// --------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------
 
 HTTP GET:  http://sdo-server.herokuapp.com/find/bus/position/byLineItinerary/813.1
     
