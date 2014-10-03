@@ -58,8 +58,9 @@ body {
 	color: #3C4313;
 	position: relative;
 	-webkit-border-radius: 16px;
-	-webkit-box-shadow: 0 2px 0 #93A045;
 	-moz-border-radius: 16px;
+	border-radius: 16px;
+	-webkit-box-shadow: 0 2px 0 #93A045;
 }
 
 /** A little hacky to create arrows without images **/
@@ -100,6 +101,7 @@ body {
 		to(#364B66));
 	-webkit-border-radius: 16px;
 	-moz-border-radius: 16px;
+    border-radius: 16px;
 	padding: 20px;
 }
 
@@ -146,6 +148,7 @@ form label {
 	padding: 10px;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
+	border-radius: 6px;
 	-webkit-box-shadow: 0 2px 0 #4E840B;
 }
 
@@ -229,6 +232,7 @@ form label {
 	padding: 5px 15px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 #adminMenu li.selected a {
@@ -319,6 +323,7 @@ form label {
 	border: 0 !important;
 	-webkit-border-radius: 16px;
 	-moz-border-radius: 16px;
+	border-radius: 16px;
 }
 
 #login label, #password-field label, #username-field label {
@@ -350,32 +355,6 @@ form label {
 	padding-top: 15px;
 }
 
-#newPost a {
-	background: #C88116;
-	-webkit-border-radius: 12px;
-	-moz-border-radius: 12px;
-	padding: 5px 10px;
-	font-size: 80%;
-	text-decoration: none;
-	color: #fff;
-	font-weight: bold;
-	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .3);
-}
-
-#newPost a span {
-	background: #7D510E;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	padding: 0 5px 2px 5px;
-	position: relative;
-	top: -1px;
-}
-
-#postContent {
-	width: 100%;
-	height: 300px;
-}
-
 .hasError {
 	background: pink;
 }
@@ -391,6 +370,7 @@ form label {
 	color: #fff;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
+	border-radius: 8px;
 	font-size: 13px;
 }
 
@@ -407,6 +387,7 @@ input[type=submit] {
 	min-width: 100px; 
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	border-radius: 5px;
 	border: 0px;
 }
 
@@ -422,6 +403,7 @@ input[type=submit] {
     font-size: 90%;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
@@ -435,6 +417,7 @@ input[type=submit] {
     font-size: 90%;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    border-radius: 5px;
     color: #fff !important;
     text-decoration: none;
 }

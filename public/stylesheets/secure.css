@@ -79,6 +79,9 @@ html, body {
 
 #login .error {
     background: #c00 !important;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
 }
 
 #login .success {
