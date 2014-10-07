@@ -10,10 +10,13 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['date', 'latitude', 'longitude', 'speed', 'bus'] }
+        #{crud.table fields:['date', 'latitude', 'longitude', 'speed', 'positionSense', 'bus'] }
             #{crud.custom 'date'}
 			    <a href="@{register.PositionController.show(object.id)}">${object.date.format()}</a>
 			#{/crud.custom}
+			#{crud.custom 'positionSense'}
+                ${play.i18n.Messages.get(object.positionSense)}
+            #{/crud.custom}
         #{/crud.table}
     </div>
 

@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import common.annotations.JsonExclude;
 import play.data.validation.MaxSize;
 import play.data.validation.MinSize;
 import play.data.validation.Required;
@@ -32,10 +33,11 @@ public class BusBO extends BaseModel {
     private Long busNumber;
     @Required
     private Short capacity;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
     @JoinColumn(name = "ID_INTINERARIO")
     private ItineraryBO itinerary;
-    @OneToMany(mappedBy = "bus", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonExclude
+    @OneToMany(mappedBy = "bus", fetch = FetchType.EAGER)
     private List<PositionBO> lstPositions;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -53,18 +55,18 @@ public class BusBO extends BaseModel {
         this.itinerary = itinerary;
     }
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Data Access
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public static List<BusBO> findPositionByItineraryId(final String itineraryId) {
-        return find("itinerary.routeNumber = ?1", itineraryId).fetch();
+    public static BusBO findAndSave(final String busId, final Long busNumber, final Short capacity, final ItineraryBO itinerary) {
+        BusBO object = findById(busId);
+        if (object == null) {
+            object = new BusBO();
+        }
+        object.setLicensePlate(busId);
+        object.setBusNumber(busNumber);
+        object.setCapacity(capacity);
+        object.setItinerary(itinerary);
+        object.save();
+        return object;
     }
-
-    public static void deleteFirstPositioByBusId(final String busId) {
-        final PositionBO firstPosition = PositionBO.findFirtPositionByBusId(busId);
-        firstPosition.delete();
-    }
-
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // get/set
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

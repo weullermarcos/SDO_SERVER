@@ -4,9 +4,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Random;
 
+import org.apache.commons.lang.time.DateUtils;
+
 import models.BusBO;
 import models.ItineraryBO;
 import models.PositionBO;
+import models.PositionBO.PositionSense;
 import play.Logger;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
@@ -41,32 +44,14 @@ public class Bootstrap extends Job {
     private void createInitialData() throws InterruptedException {
         Logger.info("Creating initial data...");
         // Bus - 1
-        ItineraryBO itineraty = this.findItineraty("560", "Riacho Fundo II", "W3 Sul");
-        BusBO bus = this.findBus("JFJ-1593", 77775555L, itineraty);
+        ItineraryBO itineraty = ItineraryBO.findAndSave("560", "Riacho Fundo II", "W3 Sul");
+        BusBO bus = BusBO.findAndSave("JFJ-1593", 77775555L, (short)57, itineraty);
         this.saveRandonPositions(bus);
         // Bus - 2
-        itineraty = this.findItineraty("813.1", "W3 Sul", "Pistão Sul");
-        bus = this.findBus("OVP-5577", 75757575L, itineraty);
+        itineraty = ItineraryBO.findAndSave("813.1", "Pistão Sul", "W3 Sul");
+        bus = BusBO.findAndSave("OVP-5577", 75757575L, (short)75, itineraty);
         this.saveRandonPositions(bus);
         Logger.info("Initial data was created...");
-    }
-
-    private ItineraryBO findItineraty(final String itineratyId, final String source, final String target) {
-        ItineraryBO object = ItineraryBO.findById(itineratyId);
-        if (object == null) {
-            object = new ItineraryBO(itineratyId, source, target);
-            object.save();
-        }
-        return object;
-    }
-
-    private BusBO findBus(final String busId, final Long busNumber, final ItineraryBO itineraty) {
-        BusBO object = BusBO.findById(busId);
-        if (object == null) {
-            object = new BusBO(busId, busNumber, (short) 57, itineraty);
-            object.save();
-        }
-        return object;
     }
 
     private void saveRandonPositions(final BusBO bus) throws InterruptedException {
@@ -76,8 +61,9 @@ public class Bootstrap extends Job {
             final PositionBO object = new PositionBO();
             object.setLatitude(new BigDecimal(latitude).setScale(6, BigDecimal.ROUND_CEILING).doubleValue());
             object.setLongitude(new BigDecimal(longitude).setScale(6, BigDecimal.ROUND_CEILING).doubleValue());
-            object.setDate(new Date());
+            object.setDate(DateUtils.addHours(new Date(), -3));
             object.setSpeed((short) new Random().nextInt(100));
+            object.setPositionSense(PositionSense.TO_END_POINT);
             object.setBus(bus);
             object.save();
             Thread.sleep(1000);

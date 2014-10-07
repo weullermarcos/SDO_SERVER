@@ -1,7 +1,11 @@
 SDO_SERVER
 ==========
 
-Para melhor visualização deste arquivo: https://raw.githubusercontent.com/weullermarcos/SDO_SERVER/master/README.md
+Para melhor visualização deste arquivo: 
+
+https://raw.githubusercontent.com/weullermarcos/SDO_SERVER/master/README.md
+
+
 
 -- Navegadores compatíveis:
 
@@ -9,10 +13,13 @@ Chrome (recomendado)
 Firefox
 
 
+
 -- Dados de acesso:
 
 user: master
 pass: sdoserver
+
+
 
 -- Regras de negócio:
 
@@ -28,11 +35,55 @@ RN-01: caso o servidor não identifique a placa enviada no JSON, um pré-cadastr
 RN-02: apenas as últimas 10 posições de cada veículo serão armazenadas a fim de poupar 
        recursos de disco. 
 
+RN-03: serão subtraídas 3 horas da data/hora enviada pelo Arduino quando esta chegar no servidor.
+
+
 
 -- Heroku Deploy REF.:
 
 https://devcenter.heroku.com/articles/getting-started-with-java#set-up
 https://www.playframework.com/documentation/1.2.7/deployment
+
+
+
+OBS.: Os detalhes de erros causados por má formatação de REQUESTs(HTTP status 400 - badRequest) podem ser encontrados no HEADER de nome "Errors" presente no HTTP RESPONSE
+
+
+
+// ------------------------------------------------------------------------------------------------------------------
+0 - Para recuperar itinerários existentes no servidor para lista-los no display do Hardware:
+// ------------------------------------------------------------------------------------------------------------------
+
+HTTP GET:  http://sdo-server.herokuapp.com/find/bus/itinerary
+
+Ex.: JSON RESPONSE:
+[
+  {
+    "routeNumber": "560",
+    "startPoint": "Riacho Fundo II",
+    "endPoint": "W3 Sul"
+  },
+  {
+    "routeNumber": "813.1",
+    "startPoint": "W3 Sul",
+    "endPoint": "Pistão Sul"
+  },
+  {
+    "routeNumber": "921",
+    "startPoint": "Setor Q",
+    "endPoint": "W3 Sul"
+  },
+  {
+    "routeNumber": "330",
+    "startPoint": "Setor Q",
+    "endPoint": "W3 Norte"
+  },
+  {
+    "routeNumber": "343.1",
+    "startPoint": "P Norte",
+    "endPoint": "Rod. P. Piloto"
+  }
+]
 
 
 // ------------------------------------------------------------------------------------------------------------------
@@ -41,14 +92,25 @@ https://www.playframework.com/documentation/1.2.7/deployment
 
 HTTP POST:  http://sdo-server.herokuapp.com/save/bus/position
 
-JSON REQUEST BODY:
+Ex.: JSON REQUEST BODY:
 {
-"latitude":-16.694133,
-"longitude":-48.790502,
-"date":"02/10/2014 23:53:00",
-"speed":55,
-"busLicensePlate":"JFJ-1593"
+    "latitude":-16.694177,
+    "longitude":-48.790577,
+    "date":"07/10/2014 03:51:00",
+    "speed":55,
+    "positionSense":"TO_END_POINT | TO_START_POINT",
+    "bus": {
+        "licensePlate": "OVR-5555",
+        "busNumber":55577777,
+        "capacity":55,
+        "itinerary": {
+            "routeNumber": "921",
+            "startPoint": "Setor Q",
+            "endPoint": "W3 Sul"
+        }
+    }
 }
+
 
 HTTP RESPONSE: statusCode: 200
 
@@ -57,7 +119,11 @@ HTTP RESPONSE: statusCode: 200
 2 - Para enviar posições de um determinado veículo ao servidor via HTTP GET:
 // ------------------------------------------------------------------------------------------------------------------
 
-HTTP GET:  http://sdo-server.herokuapp.com/save/bus/position?latitude=-16.694177&longitude=-48.790577&date=07/10/2014 23:53:00&speed=77&busLicensePlate=JFJ-1593
+Ex.: HTTP GET:  
+http://sdo-server.herokuapp.com/save/bus/position?latitude=-16.694177&longitude=-48.790577&date=07/10/2014 04:46:00&speed=77&positionSense=TO_START_POINT&licensePlate=OVR-3431&busNumber=34313431&capacity=70&routeNumber=341.1&startPoint=P Norte&endPoint=Rod. P. Piloto
+
+OBS.: %20 significa espaço em branco na URL ( http://en.wikipedia.org/wiki/Percent-encoding )
+
 
 HTTP RESPONSE: statusCode: 200
 
@@ -71,25 +137,58 @@ HTTP GET:  http://sdo-server.herokuapp.com/find/bus/position/byLicensePlate/JFJ-
 JSON RESPONSE:
 [
   {
-    "id": 272,
-    "latitude": -16.494133,
-    "longitude": -48.590502,
-    "date": "02/10/2014 15:30:50",
-    "speed": 83
+    "id": 103,
+    "latitude": -16.994133,
+    "longitude": -49.090502,
+    "date": "07/10/2014 04:24:06",
+    "speed": 72,
+    "positionSense": "TO_END_POINT",
+    "bus": {
+      "licensePlate": "JFJ-1593",
+      "busNumber": 77775555,
+      "capacity": 57,
+      "itinerary": {
+        "routeNumber": "560",
+        "startPoint": "Riacho Fundo II",
+        "endPoint": "W3 Sul"
+      }
+    }
   },
   {
-    "id": 273,
-    "latitude": -16.594133,
-    "longitude": -48.690502,
-    "date": "02/10/2014 15:31:50",
-    "speed": 55
+    "id": 104,
+    "latitude": -17.094133,
+    "longitude": -49.190502,
+    "date": "07/10/2014 04:24:06",
+    "speed": 49,
+    "positionSense": "TO_END_POINT",
+    "bus": {
+      "licensePlate": "JFJ-1593",
+      "busNumber": 77775555,
+      "capacity": 57,
+      "itinerary": {
+        "routeNumber": "560",
+        "startPoint": "Riacho Fundo II",
+        "endPoint": "W3 Sul"
+      }
+    }
   },
   {
-    "id": 274,
-    "latitude": -16.694133,
-    "longitude": -48.790502,
-    "date": "02/10/2014 15:32:50",
-    "speed": 31
+    "id": 105,
+    "latitude": -17.194133,
+    "longitude": -49.290502,
+    "date": "07/10/2014 04:24:06",
+    "speed": 83,
+    "positionSense": "TO_END_POINT",
+    "bus": {
+      "licensePlate": "JFJ-1593",
+      "busNumber": 77775555,
+      "capacity": 57,
+      "itinerary": {
+        "routeNumber": "560",
+        "startPoint": "Riacho Fundo II",
+        "endPoint": "W3 Sul"
+      }
+    }
   }
 ]
 
@@ -103,69 +202,39 @@ HTTP GET:  http://sdo-server.herokuapp.com/find/bus/position/byLineItinerary/813
 JSON RESPONSE:
 [
   {
-    "licensePlate": "OVP-5577",
-    "busNumber": 75757575,
-    "capacity": 57,
-    "itinerary": {
-      "routeNumber": "813.1",
-      "origin": "W3 Sul",
-      "arrival": "Pistão Sul"
-    },
-    "lstPositions": [
-      {
-        "id": 264,
-        "latitude": -16.694133,
-        "longitude": -48.790502,
-        "date": "02/10/2014 15:26:21",
-        "speed": 70
-      },
-      {
-        "id": 275,
-        "latitude": -15.794133,
-        "longitude": -47.890501,
-        "date": "02/10/2014 15:30:50",
-        "speed": 94
-      },
-      {
-        "id": 276,
-        "latitude": -15.894133,
-        "longitude": -47.990501,
-        "date": "02/10/2014 15:30:50",
-        "speed": 31
+    "id": 103,
+    "latitude": -16.994133,
+    "longitude": -49.090502,
+    "date": "07/10/2014 04:24:06",
+    "speed": 72,
+    "positionSense": "TO_END_POINT",
+    "bus": {
+      "licensePlate": "JFJ-1593",
+      "busNumber": 77775555,
+      "capacity": 57,
+      "itinerary": {
+        "routeNumber": "560",
+        "startPoint": "Riacho Fundo II",
+        "endPoint": "W3 Sul"
       }
-    ]
+    }
   },
   {
-    "licensePlate": "JFJ-1593",
-    "busNumber": 77775555,
-    "capacity": 57,
-    "itinerary": {
-      "routeNumber": "813.1",
-      "origin": "W3 Sul",
-      "arrival": "Pistão Sul"
-    },
-    "lstPositions": [
-      {
-        "id": 254,
-        "latitude": -16.694133,
-        "longitude": -48.790502,
-        "date": "02/10/2014 15:26:21",
-        "speed": 70
-      },
-      {
-        "id": 265,
-        "latitude": -15.794133,
-        "longitude": -47.890501,
-        "date": "02/10/2014 15:30:50",
-        "speed": 92
-      },
-      {
-        "id": 266,
-        "latitude": -15.894133,
-        "longitude": -47.990501,
-        "date": "02/10/2014 15:30:50",
-        "speed": 40
+    "id": 111,
+    "latitude": -16.294133,
+    "longitude": -48.390502,
+    "date": "07/10/2014 04:30:07",
+    "speed": 71,
+    "positionSense": "TO_START_POINT",
+    "bus": {
+      "licensePlate": "OVP-5577",
+      "busNumber": 75757575,
+      "capacity": 75,
+      "itinerary": {
+        "routeNumber": "560",
+        "startPoint": "Riacho Fundo II",
+        "endPoint": "W3 Sul"
       }
-    ]
+    }
   }
 ]

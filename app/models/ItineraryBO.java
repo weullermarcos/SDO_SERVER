@@ -20,10 +20,10 @@ public class ItineraryBO extends BaseModel {
     private String routeNumber;
     @Required
     @MaxSize(150)
-    private String origin;
+    private String startPoint;
     @Required
     @MaxSize(150)
-    private String arrival;
+    private String endPoint;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Constructors.
@@ -32,11 +32,27 @@ public class ItineraryBO extends BaseModel {
         super();
     }
 
-    public ItineraryBO(final String busNumber, final String origin, final String arrival) {
+    public ItineraryBO(final String routeNumber, final String startPoint, final String endPoint) {
         super();
-        this.routeNumber = busNumber;
-        this.origin = origin;
-        this.arrival = arrival;
+        this.routeNumber = routeNumber;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
+    }
+
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Data Access
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    public static ItineraryBO findAndSave(final String itineratyId, final String startPoint, final String endPoint) {
+        ItineraryBO object = findById(itineratyId);
+        if (object == null) {
+            object = new ItineraryBO();
+        }
+        object.setRouteNumber(itineratyId);
+        object.setStartPoint(startPoint);
+        object.setEndPoint(endPoint);
+        object.save();
+        return object;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,20 +66,20 @@ public class ItineraryBO extends BaseModel {
         this.routeNumber = routeNumber;
     }
 
-    public String getOrigin() {
-        return this.origin;
+    public String getStartPoint() {
+        return this.startPoint;
     }
 
-    public void setOrigin(final String origin) {
-        this.origin = origin;
+    public void setStartPoint(final String startPoint) {
+        this.startPoint = startPoint;
     }
 
-    public String getArrival() {
-        return this.arrival;
+    public String getEndPoint() {
+        return this.endPoint;
     }
 
-    public void setArrival(final String arrival) {
-        this.arrival = arrival;
+    public void setEndPoint(final String endPoint) {
+        this.endPoint = endPoint;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

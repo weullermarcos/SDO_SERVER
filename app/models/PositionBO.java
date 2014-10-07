@@ -5,9 +5,11 @@ import static javax.persistence.FetchType.LAZY;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,7 +25,6 @@ import models.PositionBO.JpaEventListener;
 import org.apache.commons.lang.math.NumberUtils;
 
 import play.data.validation.Required;
-
 import common.annotations.JsonExclude;
 
 /**
@@ -50,12 +51,11 @@ public class PositionBO extends BaseModel {
     @Required
     private Short speed;
     @Required
-    @JsonExclude
-    @ManyToOne(fetch = LAZY)
+    private PositionSense positionSense;
+    @Required
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
     @JoinColumn(name = "ONIBUS_ID")
     private BusBO bus;
-    @Transient
-    private String busLicensePlate;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Data Access
@@ -64,6 +64,10 @@ public class PositionBO extends BaseModel {
         return count("bus.licensePlate = ?1", busId);
     }
 
+    public static List<PositionBO> findPositionByItineraryId(final String itineraryId) {
+        return find("bus.itinerary.routeNumber = ?1", itineraryId).fetch();
+    }
+    
     public static PositionBO findFirtPositionByBusId(final String busId) {
         return find("bus.licensePlate = ?1 ORDER BY date ASC", busId).first();
     }
@@ -84,16 +88,10 @@ public class PositionBO extends BaseModel {
         }
         return find(builder.toString(), "%" + keyword.toUpperCase() + "%").fetch(offset, pageSize);
     }
-
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Transients
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public String getBusLicensePlate() {
-        return this.busLicensePlate;
-    }
-
-    public void setBusLicensePlate(final String busLicensePlate) {
-        this.busLicensePlate = busLicensePlate;
+    
+    public static void deleteFirstPositioByBusId(final String busId) {
+        final PositionBO firstPosition = findFirtPositionByBusId(busId);
+        firstPosition.delete();
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -147,6 +145,14 @@ public class PositionBO extends BaseModel {
         this.bus = bus;
     }
 
+    public PositionSense getPositionSense() {
+        return positionSense;
+    }
+
+    public void setPositionSense(PositionSense positionSense) {
+        this.positionSense = positionSense;
+    }
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // * @see java.lang.Comparable#compareTo(java.lang.Object)
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -155,6 +161,14 @@ public class PositionBO extends BaseModel {
         return this.getDate().compareTo(((PositionBO) o).getDate());
     }
 
+    /**
+     * @author jgomes - Jefferson Chaves Gomes | 17/10/2014 - 02:16:57
+     */
+    public static enum PositionSense {
+        TO_START_POINT,
+        TO_END_POINT
+    }
+    
     /**
      * @author jgomes - Jefferson Chaves Gomes | 15/09/2014 - 18:04:35
      */
@@ -166,7 +180,7 @@ public class PositionBO extends BaseModel {
         public void limitPositions(final PositionBO object) {
             final long count = PositionBO.countByBusId(object.getBus().getLicensePlate());
             if (count >= POSITION_LIMIT) {
-                BusBO.deleteFirstPositioByBusId(object.getBus().getLicensePlate());
+                deleteFirstPositioByBusId(object.getBus().getLicensePlate());
             }
         }
     }

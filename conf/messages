@@ -80,8 +80,8 @@ PositionBO=Posição
 # System labels
 # ~~~~~~
 routeNumber=Linha
-origin=Origem
-arrival=Destino
+startPoint=Origem
+endPoint=Destino
 licensePlate=Placa
 busNumber=Número
 capacity=Capacidade
@@ -91,3 +91,6 @@ latitude=Latitude
 longitude=Longitude
 speed=Velocidade
 bus=Ônibus
+positionSense=Sentido
+TO_START_POINT=Voltando
+TO_END_POINT=Indo
