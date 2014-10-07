@@ -1,10 +1,13 @@
 package controllers.integration;
 
+import java.util.Date;
 import java.util.List;
 
 import models.BaseModel;
 import models.BusBO;
 import models.PositionBO;
+import play.Play;
+import play.data.binding.As;
 import play.mvc.Controller;
 
 public class IntegrationServiceController extends Controller {
@@ -12,21 +15,21 @@ public class IntegrationServiceController extends Controller {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // Methods - public static
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public static void savePosition() {
+    public static void saveJsonPosition() {
         final String jsonString = request.params.get("body", String.class);
         final PositionBO jsonObject = PositionBO.fromJson(jsonString, PositionBO.class);
-        if (jsonObject.getLatitude() == null || jsonObject.getLongitude() == null || jsonObject.getDate() == null || jsonObject.getBusLicensePlate() == null
-                || jsonObject.getBusLicensePlate().length() != 8) {
-            badRequest();
-        }
-        BusBO bus = BusBO.findById(jsonObject.getBusLicensePlate());
-        if (bus == null) {
-            bus = new BusBO();
-            bus.setLicensePlate(jsonObject.getBusLicensePlate());
-            bus.save();
-        }
-        jsonObject.setBus(bus);
-        jsonObject.save();
+        savePosition(jsonObject);
+        ok();
+    }
+
+    public static void savePosition(final Double latitude, final Double longitude, final Date date, final Short speed, final String busLicensePlate) {
+        final PositionBO object = new PositionBO();
+        object.setLatitude(latitude);
+        object.setLongitude(longitude);
+        object.setDate(date);
+        object.setSpeed(speed);
+        object.setBusLicensePlate(busLicensePlate);
+        savePosition(object);
         ok();
     }
 
@@ -45,5 +48,22 @@ public class IntegrationServiceController extends Controller {
         final BusBO object = BusBO.findById(licensePlate);
         final List<PositionBO> lstPositions = object.getLstPositions();
         renderJSON(BaseModel.toJson(lstPositions));
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // Methods - private static
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    private static void savePosition(final PositionBO object) {
+        if (object.getLatitude() == null || object.getLongitude() == null || object.getDate() == null || object.getBusLicensePlate() == null || object.getBusLicensePlate().length() != 8) {
+            badRequest();
+        }
+        BusBO bus = BusBO.findById(object.getBusLicensePlate());
+        if (bus == null) {
+            bus = new BusBO();
+            bus.setLicensePlate(object.getBusLicensePlate());
+            bus.save();
+        }
+        object.setBus(bus);
+        object.save();
     }
 }

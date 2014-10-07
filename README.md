@@ -36,7 +36,7 @@ https://www.playframework.com/documentation/1.2.7/deployment
 
 
 // ------------------------------------------------------------------------------------------------------------------
-1 - Para enviar posições de um determinado veículo ao servidor:
+1 - Para enviar posições de um determinado veículo ao servidor via HTTP POST:
 // ------------------------------------------------------------------------------------------------------------------
 
 HTTP POST:  http://sdo-server.herokuapp.com/save/bus/position
@@ -54,7 +54,16 @@ HTTP RESPONSE: statusCode: 200
 
 
 // ------------------------------------------------------------------------------------------------------------------
-2 - Para recuperar posições a partir de uma placa:
+2 - Para enviar posições de um determinado veículo ao servidor via HTTP GET:
+// ------------------------------------------------------------------------------------------------------------------
+
+HTTP GET:  http://sdo-server.herokuapp.com/save/bus/position?latitude=-16.694177&longitude=-48.790577&date=07/10/2014 23:53:00&speed=77&busLicensePlate=JFJ-1593
+
+HTTP RESPONSE: statusCode: 200
+
+
+// ------------------------------------------------------------------------------------------------------------------
+3 - Para recuperar posições a partir de uma placa:
 // ------------------------------------------------------------------------------------------------------------------
 
 HTTP GET:  http://sdo-server.herokuapp.com/find/bus/position/byLicensePlate/JFJ-1593
@@ -86,7 +95,7 @@ JSON RESPONSE:
 
 
 // ------------------------------------------------------------------------------------------------------------------
-3 - Para recuperar posições a partir de uma linha:
+4 - Para recuperar posições a partir de uma linha:
 // ------------------------------------------------------------------------------------------------------------------
 
 HTTP GET:  http://sdo-server.herokuapp.com/find/bus/position/byLineItinerary/813.1
