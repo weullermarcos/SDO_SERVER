@@ -165,7 +165,7 @@ public class PositionBO extends BaseModel {
         @PrePersist
         public void limitPositions(final PositionBO object) {
             final long count = PositionBO.countByBusId(object.getBus().getLicensePlate());
-            if (count > POSITION_LIMIT) {
+            if (count >= POSITION_LIMIT) {
                 BusBO.deleteFirstPositioByBusId(object.getBus().getLicensePlate());
             }
         }
