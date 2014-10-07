@@ -57,7 +57,10 @@ HTTP RESPONSE: statusCode: 200
 2 - Para enviar posições de um determinado veículo ao servidor via HTTP GET:
 // ------------------------------------------------------------------------------------------------------------------
 
-HTTP GET:  http://sdo-server.herokuapp.com/save/bus/position?latitude=-16.694177&longitude=-48.790577&date=07/10/2014 23:53:00&speed=77&busLicensePlate=JFJ-1593
+HTTP GET:  http://sdo-server.herokuapp.com/save/bus/position?latitude=-16.694177&longitude=-48.790577&date=07/10/2014%2023:53:00&speed=77&busLicensePlate=JFJ-1593
+
+OBS.: %20 significa espaço em branco na URL ( http://en.wikipedia.org/wiki/Percent-encoding )
+
 
 HTTP RESPONSE: statusCode: 200
 
