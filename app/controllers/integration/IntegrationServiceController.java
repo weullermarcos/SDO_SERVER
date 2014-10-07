@@ -39,11 +39,12 @@ public class IntegrationServiceController extends Controller {
         final PositionBO object = new PositionBO();
         object.setLatitude(latitude);
         object.setLongitude(longitude);
-        object.setDate(DateUtils.addHours(date, -3));
+        object.setDate(date);
         object.setSpeed(speed);
         object.setPositionSense(positionSense);
         object.setBus(new BusBO(licensePlate, busNumber, capacity, new ItineraryBO(routeNumber, startPoint, endPoint)));
         validateRequest(object);
+        object.setDate(DateUtils.addHours(date, -3));
         object.merge()._save();
         ok();
     }
