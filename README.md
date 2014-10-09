@@ -54,7 +54,11 @@ OBS.: Os detalhes de erros causados por má formatação de REQUESTs(HTTP status
 0 - Para recuperar itinerários existentes no servidor para lista-los no display do Hardware:
 // ------------------------------------------------------------------------------------------------------------------
 
-HTTP GET:  http://sdo-server.herokuapp.com/find/bus/itinerary
+HTTP GET:  
+    http://sdo-server.herokuapp.com/find/bus/itinerary/{itineraryLine} 
+    OU 
+    http://sdo-server.herokuapp.com/find/bus/itinerary
+
 
 Ex.: JSON RESPONSE:
 [
