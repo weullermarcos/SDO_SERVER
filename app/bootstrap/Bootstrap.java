@@ -29,7 +29,7 @@ public class Bootstrap extends Job {
         Logger.info("BOOTSTRAP START");
         Logger.info("======================================================");
         try {
-            this.createInitialData();
+//            this.createInitialData();
         } catch (final Exception e) {
             Logger.error("======================================================");
             Logger.error("BOOTSTRAP FAIL");

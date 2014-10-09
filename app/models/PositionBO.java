@@ -50,7 +50,7 @@ public class PositionBO extends BaseModel {
     private Date date;
     @Required
     private Short speed;
-    @Required
+    private String positionItinerary;
     private PositionSense positionSense;
     @Required
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE })
@@ -78,6 +78,7 @@ public class PositionBO extends BaseModel {
             builder.append("latitude = ").append(keyword);
             builder.append(" OR longitude = ").append(keyword);
             builder.append(" OR speed = ").append(keyword);
+            builder.append(" OR positionItinerary LIKE ?1");
             builder.append(" OR bus.licensePlate LIKE ?1");
         } else {
             builder.append("bus.licensePlate LIKE ?1");
@@ -103,6 +104,14 @@ public class PositionBO extends BaseModel {
 
     public void setId(final Long id) {
         this.id = id;
+    }
+
+    public String getPositionItinerary() {
+        return positionItinerary;
+    }
+
+    public void setPositionItinerary(String positionItinerary) {
+        this.positionItinerary = positionItinerary;
     }
 
     public Double getLatitude() {

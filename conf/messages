@@ -94,3 +94,4 @@ bus=Ônibus
 positionSense=Sentido
 TO_START_POINT=Voltando
 TO_END_POINT=Indo
+positionItinerary=Itinerário

@@ -41,6 +41,7 @@ DELETE  /admin/posicao/{id}                                           register.P
 # ~~~~
 GET     /save/bus/position                                            integration.IntegrationServiceController.savePosition
 POST    /save/bus/position                                            integration.IntegrationServiceController.saveJsonPosition
+GET     /find/bus/itinerary/{itineraryLine}                           integration.IntegrationServiceController.findItinerary
 GET     /find/bus/itinerary                                           integration.IntegrationServiceController.findItineraries
 GET     /find/bus/position/byLineItinerary/{itineraryLine}            integration.IntegrationServiceController.findPositionByItineraryId
 GET     /find/bus/position/byLicensePlate/{licensePlate}              integration.IntegrationServiceController.findPositionByBusId

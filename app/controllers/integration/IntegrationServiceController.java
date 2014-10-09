@@ -30,6 +30,7 @@ public class IntegrationServiceController extends Controller {
         final PositionBO jsonObject = PositionBO.fromJson(jsonString, PositionBO.class);
         validateRequest(jsonObject);
         jsonObject.setDate(DateUtils.addHours(jsonObject.getDate(), -3));
+        jsonObject.setPositionItinerary(jsonObject.getBus().getItinerary().getRouteNumber());
         jsonObject.merge()._save();
         ok();
     }
@@ -45,6 +46,7 @@ public class IntegrationServiceController extends Controller {
         object.setBus(new BusBO(licensePlate, busNumber, capacity, new ItineraryBO(routeNumber, startPoint, endPoint)));
         validateRequest(object);
         object.setDate(DateUtils.addHours(date, -3));
+        object.setPositionItinerary(object.getBus().getItinerary().getRouteNumber());
         object.merge()._save();
         ok();
     }
@@ -52,6 +54,11 @@ public class IntegrationServiceController extends Controller {
     public static void findItineraries() {
         List<ItineraryBO> lstItinerary = ItineraryBO.findAll();
         renderJSON(BaseModel.toJson(lstItinerary));
+    }
+    
+    public static void findItinerary(final String itineraryLine) {
+        ItineraryBO object = ItineraryBO.findById(itineraryLine);
+        renderJSON(object.toJson());
     }
 
     public static void findPositionByItineraryId(final String itineraryLine) {
